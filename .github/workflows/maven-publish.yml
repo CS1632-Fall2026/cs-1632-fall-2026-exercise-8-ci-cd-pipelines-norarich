@@ -26,7 +26,7 @@ jobs:
         distribution: 'zulu'
         cache: maven
 
-    - name: Build with Maven
+    - name: Build with Maven # creates a jar file, takes all class files and compresses to jar file
       run: mvn -B package
 
     - name: Publish to GitHub Packages Apache Maven
