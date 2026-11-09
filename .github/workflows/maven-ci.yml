@@ -33,7 +33,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'zulu'
-        cache: maven
+        cache: maven # enables you to cache maven dependencies
 
     # "test" runs the JUnit tests while measuring Jacoco coverage, and "site"
     # then generates a project website with the reports configured in pom.xml
@@ -47,6 +47,7 @@ jobs:
         name: Test report
         path: target/site
 
+      # zips build to be used in update dependence graph
     - name: Cache build
       uses: actions/cache@v5
       with:
@@ -56,6 +57,7 @@ jobs:
   # Uploads dependency graph to GitHub to receive Dependabot alerts 
   update_dependence_graph:
 
+    # ensures that maven test finishes before this test is run
     needs: [maven_test]  # Enforces that maven_test runs first
 
     runs-on: ubuntu-latest
@@ -64,6 +66,7 @@ jobs:
       contents: write
 
     steps:
+    # gets cached build from maven test, unzips, and uses
     - name: Restore cached build
       uses: actions/cache@v5
       with:
